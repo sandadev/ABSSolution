@@ -37,6 +37,7 @@ namespace ABS_API.Controllers
             AccessTokenFormat = accessTokenFormat;
         }
 
+        //test git
         public ApplicationUserManager UserManager
         {
             get
