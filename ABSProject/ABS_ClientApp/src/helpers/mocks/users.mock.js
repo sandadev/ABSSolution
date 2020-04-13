@@ -1,5 +1,5 @@
 let users =
-    [{ id: 1, email: 'test@gmail.com', password: 'test', firstName: 'Test', lastName: 'User' }
+    [{ id: 1, email: 'test@gmail.com', password: 'Test@123', firstName: 'Test', lastName: 'User',mobileNo:'' }
     ];
 
 export const usersMock = {
@@ -21,7 +21,8 @@ function authenticateUser(params, resolve, reject) {
             email: user.email,
             firstName: user.firstName,
             lastName: user.lastName,
-            token: 'fake-jwt-token'
+            token: 'fake-jwt-token',
+            mobileNo:user.mobileNo
         };
         return resolve({ ok: true, text: () => Promise.resolve(JSON.stringify(responseJson)) });
     }

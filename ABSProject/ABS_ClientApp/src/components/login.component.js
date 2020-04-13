@@ -13,31 +13,61 @@ class LoginPage extends React.Component {
         this.props.dispatch(userActions.logout());
 
         this.state = {
-            email: '',
-            password: '',
-            submitted: false
+            user: { email: '', password: '' },
+            errors: { emailError: '', passwordError: '' }
         };
     }
 
     handleChange = (e) => {
-        const { name, value } = e.target;
-        this.setState({ [name]: value });
+        let user = this.state.user;
+        user[e.target.name] = e.target.value;
+        this.setState({ user });
     }
 
     handleSubmit = (e) => {
         e.preventDefault();
-
-        this.setState({ submitted: true });
-        const { email, password } = this.state;
-        const { dispatch } = this.props;
-        if (email && password) {
+        if (this.validateForm()) {
+            const { email, password } = this.state.user;
+            const { dispatch } = this.props;
             dispatch(userActions.login(email, password));
         }
+
     }
+
+    validateForm() {
+
+        let user = this.state.user;
+        let errors = this.state.errors;
+        let formIsValid = true;
+        //regular expression for email validation
+        var emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        if (!user["email"]) {
+            formIsValid = false;
+            errors["emailError"] = "Please enter your email-ID.";
+        } else if (typeof user["email"] !== "undefined" && !emailPattern.test(user["email"])) {
+            formIsValid = false;
+            errors["emailError"] = "Please enter valid email-ID.";
+        }
+
+        if (!user["password"]) {
+            formIsValid = false;
+            errors["passwordError"] = "Please enter your password.";
+        } else if (typeof user["password"] !== "undefined" && !user["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
+            formIsValid = false;
+            errors["passwordError"] = "Please enter secure and strong password.";
+
+        }
+        this.setState({
+            errors: errors
+        });
+        return formIsValid;
+    }
+
 
     render() {
         const { loggingIn } = this.props;
-        const { email, password, submitted } = this.state;
+        const { email, password } = this.state.user;
+        const { emailError, passwordError } = this.state.errors;
         return (
             <div className="jumbotron">
                 <div className="container">
@@ -46,18 +76,18 @@ class LoginPage extends React.Component {
                         <div className="col-md-6 col-md-offset-3">
                             <h2>Login</h2>
                             <form name="form" noValidate onSubmit={this.handleSubmit}>
-                                <div className={'form-group' + (submitted && !email ? ' has-error' : '')}>
+                                <div className={'form-group' + (emailError ? ' has-error' : '')}>
                                     <label htmlFor="email">Email</label>
                                     <input type="email" required className="form-control" name="email" value={email} onChange={this.handleChange} />
-                                    {submitted && !email &&
-                                        <div className="help-block">email is required</div>
+                                    {emailError &&
+                                        <div className="help-block">{emailError}</div>
                                     }
                                 </div>
-                                <div className={'form-group' + (submitted && !password ? ' has-error' : '')}>
+                                <div className={'form-group' + (passwordError ? ' has-error' : '')}>
                                     <label htmlFor="password">Password</label>
                                     <input type="password" required className="form-control" name="password" value={password} onChange={this.handleChange} />
-                                    {submitted && !password &&
-                                        <div className="help-block">Password is required</div>
+                                    {passwordError &&
+                                        <div className="help-block">{passwordError}</div>
                                     }
                                 </div>
                                 <div className="form-group">
@@ -74,8 +104,8 @@ class LoginPage extends React.Component {
             </div>
         );
     }
-}
 
+}
 function mapStateToProps(state) {
     const { loggingIn } = state.authentication;
     return {

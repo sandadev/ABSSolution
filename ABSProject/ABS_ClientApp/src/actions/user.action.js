@@ -30,10 +30,10 @@ function register(user) {
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-function login(username, password) {
+function login(email, password) {
     return dispatch => {
-        dispatch(request(username));
-        userService.login(username, password)
+        dispatch(request(email));
+        userService.login(email, password)
             .then(
                 user => {
                     dispatch(success(user));

@@ -12,14 +12,18 @@ class RegistrationPage extends React.Component {
             user: {
                 firstName: '',
                 lastName: '',
-                username: '',
-                password: ''
+                email: '',
+                password: '',
+                mobileNo: ''
             },
-            submitted: false
+            error: {
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: '',
+                mobileNo: ''
+            }
         };
-
-        // this.handleChange = this.handleChange.bind(this);
-        // this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     handleChange = (event) => {
@@ -35,47 +39,99 @@ class RegistrationPage extends React.Component {
 
     handleSubmit = (event) => {
         event.preventDefault();
-
-        this.setState({ submitted: true });
         const { user } = this.state;
-        if (user.firstName && user.lastName && user.username && user.password) {
+        if (this.validateForm()) {
             this.props.register(user);
         }
     }
 
+    validateForm() {
+
+        let { user, error } = this.state;
+        let formIsValid = true;
+        //regular expression for email validation
+        var emailPattern = new RegExp(/^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i);
+        if (!user["email"]) {
+            formIsValid = false;
+            error["email"] = "Please enter your email-ID.";
+        } else if (typeof user["email"] !== "undefined" && !emailPattern.test(user["email"])) {
+            formIsValid = false;
+            error["email"] = "Please enter valid email-ID.";
+        }
+
+        if (!user["firstName"]) {
+            formIsValid = false;
+            error["firstName"] = "Please enter your first name";
+        }
+
+        if (!user["lastName"]) {
+            formIsValid = false;
+            error["lastName"] = "Please enter your last name";
+        }
+
+        if (!user["password"]) {
+            formIsValid = false;
+            error["password"] = "Please enter your password.";
+        } else if (typeof user["password"] !== "undefined" && !user["password"].match(/^.*(?=.{8,})(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%&]).*$/)) {
+            formIsValid = false;
+            error["password"] = "Please enter secure and strong password.";
+        }
+
+        if (!user["mobileNo"]) {
+            formIsValid = false;
+            error["mobileNo"] = "Please enter your mobile no.";
+        } else if (typeof user["mobileno"] !== "undefined" && !user["mobileno"].match(/^[0-9]{10}$/)) {
+            formIsValid = false;
+            error["mobileNo"] = "Please enter valid mobile no.";
+        }
+        this.setState({
+            error: error
+        });
+        return formIsValid;
+    }
+
     render() {
         const { registering } = this.props;
-        const { user, submitted } = this.state;
+        const { user, error } = this.state;
         return (
             <div className="col-md-6 col-md-offset-3">
                 <h2>Register</h2>
                 <form name="form" onSubmit={this.handleSubmit}>
-                    <div className={'form-group' + (submitted && !user.firstName ? ' has-error' : '')}>
+                    <div className={'form-group' + (error.firstName ? ' has-error' : '')}>
                         <label htmlFor="firstName">First Name</label>
                         <input type="text" className="form-control" name="firstName" value={user.firstName} onChange={this.handleChange} />
-                        {submitted && !user.firstName &&
-                            <div className="help-block">First Name is required</div>
+                        {error.firstName &&
+                            <div className="help-block">{error.firstName}</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !user.lastName ? ' has-error' : '')}>
+                    <div className={'form-group' + (error.lastName ? ' has-error' : '')}>
                         <label htmlFor="lastName">Last Name</label>
                         <input type="text" className="form-control" name="lastName" value={user.lastName} onChange={this.handleChange} />
-                        {submitted && !user.lastName &&
-                            <div className="help-block">Last Name is required</div>
+                        {!user.lastName &&
+                            <div className="help-block">{error.lastName}</div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !user.username ? ' has-error' : '')}>
-                        <label htmlFor="username">Username</label>
-                        <input type="text" className="form-control" name="username" value={user.username} onChange={this.handleChange} />
-                        {submitted && !user.username &&
-                            <div className="help-block">Username is required</div>
+                    <div className={'form-group' + (error.email ? ' has-error' : '')}>
+                        <label htmlFor="email">Email</label>
+                        <input type="text" className="form-control" name="email" value={user.email} onChange={this.handleChange} />
+                        {error.email &&
+                            <div className="help-block">{error.email} </div>
                         }
                     </div>
-                    <div className={'form-group' + (submitted && !user.password ? ' has-error' : '')}>
+
+                    <div className={'form-group' + (error.mobileNo ? ' has-error' : '')}>
+                        <label htmlFor="mobileNo">Mobile No</label>
+                        <input type="mobileNo" className="form-control" name="mobileNo" value={user.mobileNo} onChange={this.handleChange} />
+                        {error.mobileNo &&
+                            <div className="help-block">{error.mobileNo} </div>
+                        }
+                    </div>
+
+                    <div className={'form-group' + (error.password ? ' has-error' : '')}>
                         <label htmlFor="password">Password</label>
                         <input type="password" className="form-control" name="password" value={user.password} onChange={this.handleChange} />
-                        {submitted && !user.password &&
-                            <div className="help-block">Password is required</div>
+                        {error.password &&
+                            <div className="help-block">{error.password} </div>
                         }
                     </div>
                     <div className="form-group">
