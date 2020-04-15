@@ -108,6 +108,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ABS_API\ABS_API.csproj">
+      <Project>{D1C39AEA-CA7F-4596-9962-EC19796B9B7C}</Project>
+      <Name>ABS_API</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
