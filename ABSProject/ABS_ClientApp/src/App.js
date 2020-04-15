@@ -1,10 +1,10 @@
 import React from 'react';
-import { history } from './helpers'
-import { Router, Route, Redirect, Switch } from 'react-router-dom'
-import { PrivateRoute } from './components'
-import LoginPage from './components/login.component'
-import RegistrationPage from './components/register.component'
-import Dashboard from './components/dashboard.component'
+import { history } from './helpers';
+import { Router, Route, Redirect, Switch } from 'react-router-dom';
+import PrivateRoute from './components/routes/PrivateRoute';
+import LoginPage from './components/pages/Login';
+import RegistrationPage from './components/pages/Register';
+import Dashboard from './components/pages/Dashboard';
 
 function App() {
   return (

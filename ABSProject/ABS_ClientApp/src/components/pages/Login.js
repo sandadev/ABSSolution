@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import { userActions } from '../actions'
-import './login.css'
+import { userActions } from '../../actions';
+import '../../assets/css/login.css';
 
 class LoginPage extends React.Component {
     constructor(props) {
