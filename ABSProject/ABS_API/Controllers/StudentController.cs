@@ -7,32 +7,31 @@ using System.Web.Http;
 
 namespace ABS_API.Controllers
 {
-    //[Authorize]
-    public class ValuesController : ApiController
+    public class StudentController : ApiController
     {
-        // GET api/values
+        // GET: api/Student
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            return new string[] { "Ramesh", "Suresh","Sathish" };
         }
 
-        // GET api/values/5
-        public string Get(int id)
+        // GET: api/Student/5
+        public int Get(int id)
         {
-            return "value";
+            return id;
         }
 
-        // POST api/values
+        // POST: api/Student
         public void Post([FromBody]string value)
         {
         }
 
-        // PUT api/values/5
+        // PUT: api/Student/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE: api/Student/5
         public void Delete(int id)
         {
         }
