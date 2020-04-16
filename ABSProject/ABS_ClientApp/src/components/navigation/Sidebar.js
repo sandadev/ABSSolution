@@ -1,10 +1,5 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
-import '../assets/css/sidebar.css'
-
-// import AdminNavbarLinks from "../Navbars/AdminNavbarLinks.jsx";
-
-// import logo from "assets/img/reactlogo.png";
 
 class Sidebar extends Component {
   constructor(props) {

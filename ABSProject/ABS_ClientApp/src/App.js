@@ -1,24 +1,36 @@
 import React from 'react';
-import { history } from './helpers';
-import { Router, Route, Redirect, Switch } from 'react-router-dom';
-import PrivateRoute from './components/routes/PrivateRoute';
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
 import LoginPage from './components/pages/Login';
 import RegistrationPage from './components/pages/Register';
-import Dashboard from './components/pages/Dashboard';
+import GuestRoute from './components/routes/GuestRoute';
+import User from './components/user';
 
-function App() {
-  return (
-    <Router history={history}>
-      {/* <NavigationBar />
-      <Sidebar /> */}
-      <Switch>
-        <PrivateRoute exact path="/" component={Dashboard} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/register" component={RegistrationPage} />
-        <Redirect from="*" to="/" />
-      </Switch>
-    </Router>
-  );
+const App = ({ location, isAuthenticated }) => (
+  <div>
+    {isAuthenticated && <User location={location} />}
+    <GuestRoute location={location} path="/" exact component={LoginPage} />
+    <GuestRoute location={location} path="/login" exact component={LoginPage} />
+    <GuestRoute
+      location={location}
+      path="/register"
+      exact
+      component={RegistrationPage}
+    />
+  </div>
+);
+
+App.propTypes = {
+  location: PropTypes.shape({
+    pathname: PropTypes.string.isRequired
+  }).isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
+};
+
+function mapStateToProps(state) {
+  return {
+    isAuthenticated: localStorage.getItem('user') ? true : false
+  };
 }
 
-export default App;
+export default connect(mapStateToProps)(App);

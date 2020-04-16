@@ -1,6 +1,6 @@
 
 import React, { Component } from "react";
-import { Navbar, NavItem, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, NavDropdown, NavItem, MenuItem } from "react-bootstrap";
 
 
 class NavigationBar extends Component {
@@ -35,30 +35,41 @@ class NavigationBar extends Component {
                 <b className="caret" />
                 <span className="notification">5</span>
                 <p className="hidden-lg hidden-md">Notification</p>
-            </div>)
+            </div>
+        )
         return (
-            // <Navbar fluid>
-            //     <Navbar.Header>
-            //         <Navbar.Brand>
-            //             <a href="#pablo">{this.props.brandText}</a>
-            //         </Navbar.Brand>
-            //         <Navbar.Toggle onClick={this.mobileSidebarToggle} />
-            //     </Navbar.Header>
+            <Navbar fluid>
+                <Navbar.Header>
+                    <Navbar.Brand>
+                        <a href="#pablo">{this.props.brandText}</a>
+                    </Navbar.Brand>
+                    <Navbar.Toggle onClick={this.mobileSidebarToggle} />
+                </Navbar.Header>
+                <Navbar.Collapse>
 
-            // </Navbar>
-            <nav className="navbar navbar-default">
-                <div className="container-fluid">
-                    <div className="navbar-header">
-                        <a className="navbar-brand" href="#">WebSiteName</a>
-                    </div>
-                    <ul className="nav navbar-nav">
-                        <li className="active"><a href="#">Home</a></li>
-                        <li><a href="#">Page 1</a></li>
-                        <li><a href="#">Page 2</a></li>
-                        <li><a href="#">Page 3</a></li>
-                    </ul>
-                </div>
-            </nav>
+                    <Nav pullRight>
+                        <NavItem eventKey={1} href="#">
+                            Account
+          </NavItem>
+                        <NavDropdown
+                            eventKey={2}
+                            title="Dropdown"
+                            id="basic-nav-dropdown-right"
+                        >
+                            <MenuItem eventKey={2.1}>Action</MenuItem>
+                            <MenuItem eventKey={2.2}>Another action</MenuItem>
+                            <MenuItem eventKey={2.3}>Something</MenuItem>
+                            <MenuItem eventKey={2.4}>Another action</MenuItem>
+                            <MenuItem eventKey={2.5}>Something</MenuItem>
+                            <MenuItem divider />
+                            <MenuItem eventKey={2.5}>Separated link</MenuItem>
+                        </NavDropdown>
+                        <NavItem eventKey={3} href="#">
+                            Log out
+          </NavItem>
+                    </Nav>
+                </Navbar.Collapse>
+            </Navbar>
         );
     }
 }
