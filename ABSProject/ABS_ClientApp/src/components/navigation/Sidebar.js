@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { NavLink } from "react-router-dom";
+import logo from "../../assets/img/reactlogo.png";
 
 class Sidebar extends Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class Sidebar extends Component {
             className="simple-text logo-mini"
           >
             <div className="logo-img">
-              {/* <img src={logo} alt="logo_image" /> */}
+              <img src={logo} alt="logo_image" />
             </div>
           </a>
           <a
@@ -52,7 +53,6 @@ class Sidebar extends Component {
         </div>
         <div className="sidebar-wrapper">
           <ul className="nav">
-            {this.state.width <= 991 ? null : null}
             {this.props.routes.map((prop, key) => {
               if (!prop.redirect)
                 return (

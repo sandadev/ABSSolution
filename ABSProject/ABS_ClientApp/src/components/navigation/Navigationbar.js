@@ -46,11 +46,7 @@ class NavigationBar extends Component {
                     <Navbar.Toggle onClick={this.mobileSidebarToggle} />
                 </Navbar.Header>
                 <Navbar.Collapse>
-
                     <Nav pullRight>
-                        <NavItem eventKey={1} href="#">
-                            Account
-          </NavItem>
                         <NavDropdown
                             eventKey={2}
                             title="Dropdown"
@@ -64,9 +60,7 @@ class NavigationBar extends Component {
                             <MenuItem divider />
                             <MenuItem eventKey={2.5}>Separated link</MenuItem>
                         </NavDropdown>
-                        <NavItem eventKey={3} href="#">
-                            Log out
-          </NavItem>
+                        <NavItem href="/login">Log out </NavItem>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

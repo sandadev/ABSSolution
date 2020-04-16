@@ -6,24 +6,19 @@ import NavigationBar from './navigation/Navigationbar';
 
 export class User extends Component {
     componentDidUpdate(e) {
-        // if (
-        //     window.innerWidth < 993 &&
-        //     e.history.location.pathname !== e.location.pathname &&
-        //     document.documentElement.className.indexOf("nav-open") !== -1
-        // ) {
-        //     document.documentElement.classList.toggle("nav-open");
-        // }
-        // if (e.history.action === "PUSH") {
-        //     document.documentElement.scrollTop = 0;
-        //     document.scrollingElement.scrollTop = 0;
-        //     this.refs.mainPanel.scrollTop = 0;
-        // }
+        if (
+            window.innerWidth < 993 &&
+            e.history.location.pathname !== e.location.pathname &&
+            document.documentElement.className.indexOf("nav-open") !== -1
+        ) {
+            document.documentElement.classList.toggle("nav-open");
+        }
     }
     getBrandText = path => {
         for (let i = 0; i < routes.length; i++) {
             if (
                 this.props.location.pathname.indexOf(
-                    routes[i].layout + routes[i].path
+                    routes[i].path
                 ) !== -1
             ) {
                 return routes[i].name;
