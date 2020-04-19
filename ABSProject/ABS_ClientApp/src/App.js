@@ -5,10 +5,12 @@ import LoginPage from './components/pages/Login';
 import RegistrationPage from './components/pages/Register';
 import GuestRoute from './components/routes/GuestRoute';
 import User from './components/user';
+import Notification from './components/common/Notification'
 
-const App = ({ location, isAuthenticated }) => (
+const App = ({ location, isAuthenticated, props }) => (
   <div>
     {isAuthenticated && <User location={location} />}
+    <Notification props/>
     <GuestRoute location={location} path="/" exact component={LoginPage} />
     <GuestRoute location={location} path="/login" exact component={LoginPage} />
     <GuestRoute

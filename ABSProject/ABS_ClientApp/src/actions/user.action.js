@@ -1,6 +1,7 @@
-import { userConstants } from '../constants'
-import { userService } from '../services'
-import { history } from '../helpers'
+import { userConstants } from '../constants';
+import { userService } from '../services';
+import { history } from '../helpers';
+import { notificationActions } from '../actions'
 
 export const userActions = {
     register,
@@ -18,9 +19,11 @@ function register(user) {
                 user => {
                     dispatch(success());
                     history.push('/login');
+                    dispatch(notificationActions.success('Sucessfully Logged in'));
                 },
                 error => {
                     dispatch(failure(error));
+                    dispatch(notificationActions.error(error));
                 }
             );
     };
@@ -39,7 +42,10 @@ function login(email, password) {
                     dispatch(success(user));
                     history.push('/');
                 },
-                error => dispatch(failure(error))
+                error => {
+                    dispatch(failure(error));
+                    dispatch(notificationActions.error(error));
+                }
             );
     };
 
