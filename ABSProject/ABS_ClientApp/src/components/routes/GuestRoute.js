@@ -10,8 +10,8 @@ const GuestRoute = ({ isAuthenticated, component: Component, ...rest }) => (
       !isAuthenticated ? (
         <Component {...props} />
       ) : (
-        <Redirect to="/dashboard" />
-      )}
+          <Redirect to="/dashboard" />
+        )}
   />
 );
 
@@ -21,7 +21,7 @@ GuestRoute.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    isAuthenticated: localStorage.getItem('user')? true : false
+    isAuthenticated: localStorage.getItem('user') ? true : false
   };
 }
 

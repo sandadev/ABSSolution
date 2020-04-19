@@ -1,17 +1,19 @@
-
 import React, { Component } from "react";
 import { Navbar, Nav, NavDropdown, NavItem, MenuItem } from "react-bootstrap";
+import { userActions } from '../../actions'
+import { connect } from "react-redux";
 
 
 class NavigationBar extends Component {
     constructor(props) {
         super(props);
-        this.mobileSidebarToggle = this.mobileSidebarToggle.bind(this);
+
         this.state = {
             sidebarExists: false
         };
     }
-    mobileSidebarToggle(e) {
+
+    mobileSidebarToggle = (e) => {
         if (this.state.sidebarExists === false) {
             this.setState({
                 sidebarExists: true
@@ -26,6 +28,16 @@ class NavigationBar extends Component {
             document.documentElement.classList.toggle("nav-open");
         };
         document.body.appendChild(node);
+    }
+
+    getTitle = () => {
+        const user = JSON.parse(localStorage.getItem('user'));
+        return user.firstName;
+    }
+
+    logout = () => {
+        const { dispatch } = this.props;
+        this.props.logout();
     }
 
     render() {
@@ -49,23 +61,23 @@ class NavigationBar extends Component {
                     <Nav pullRight>
                         <NavDropdown
                             eventKey={2}
-                            title="Dropdown"
+                            title={this.getTitle()}
                             id="basic-nav-dropdown-right"
                         >
-                            <MenuItem eventKey={2.1}>Action</MenuItem>
-                            <MenuItem eventKey={2.2}>Another action</MenuItem>
-                            <MenuItem eventKey={2.3}>Something</MenuItem>
-                            <MenuItem eventKey={2.4}>Another action</MenuItem>
-                            <MenuItem eventKey={2.5}>Something</MenuItem>
+                            <MenuItem>Profile</MenuItem>
+                            <MenuItem>Change Password</MenuItem>
                             <MenuItem divider />
-                            <MenuItem eventKey={2.5}>Separated link</MenuItem>
+                            <MenuItem onClick={() => this.logout()} >Logout</MenuItem>
                         </NavDropdown>
-                        <NavItem href="/login">Log out </NavItem>
                     </Nav>
                 </Navbar.Collapse>
-            </Navbar>
+            </Navbar >
         );
     }
 }
 
-export default NavigationBar;
+const actionCreators = {
+    logout: userActions.logout
+}
+
+export default connect('', actionCreators)(NavigationBar);

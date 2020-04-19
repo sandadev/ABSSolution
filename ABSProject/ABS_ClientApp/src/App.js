@@ -4,21 +4,19 @@ import PropTypes from "prop-types";
 import LoginPage from './components/pages/Login';
 import RegistrationPage from './components/pages/Register';
 import GuestRoute from './components/routes/GuestRoute';
+import UserRoute from './components/routes/UserRoute';
 import User from './components/user';
-import Notification from './components/common/Notification'
+import Notification from './components/common/Notification';
+import Dashboard from './components/pages/Dashboard';
 
-const App = ({ location, isAuthenticated, props }) => (
+const App = ({ location, isAuthenticated }) => (
   <div>
     {isAuthenticated && <User location={location} />}
-    <Notification props/>
+    <Notification props />
     <GuestRoute location={location} path="/" exact component={LoginPage} />
     <GuestRoute location={location} path="/login" exact component={LoginPage} />
-    <GuestRoute
-      location={location}
-      path="/register"
-      exact
-      component={RegistrationPage}
-    />
+    <GuestRoute location={location} path="/register" exact component={RegistrationPage} />
+    <UserRoute location={location} path="/dashboard" exact component={Dashboard} />
   </div>
 );
 
